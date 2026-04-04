@@ -1,0 +1,18 @@
+# pcap files are too big for git
+captures/*.pcap
+captures/*.pcapng
+!captures/.gitkeep
+
+# python stuff
+__pycache__/
+*.pyc
+venv/
+.env
+
+# os junk
+.DS_Store
+Thumbs.db
+
+# ide
+.vscode/
+.idea/
