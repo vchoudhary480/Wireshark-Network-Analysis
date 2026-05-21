@@ -1,62 +1,58 @@
 # Wireshark Network Traffic Analysis
 
-Captured and analyzed network traffic to identify security vulnerabilities. Analyzed a Telnet sample capture (credential interception) and live home network traffic (DNS leaks, unencrypted HTTP). Built a Python script that automates detection of plaintext credentials, insecure protocols, and information leakage on any pcap file.
+I wanted to see what's actually going over my home network in plaintext. Turns out, more than I expected.
 
-## What I did
+This project has two parts. First, I analyzed a sample Telnet capture from the Wireshark wiki to pull out login credentials and a full command history, all sent without encryption. Second, I captured live traffic from my own network and found that DNS queries leak every domain I visit to anyone on the same Wi-Fi, even though all my web traffic uses HTTPS.
 
-Two types of analysis:
-
-**Sample capture** (`telnet-cooked.pcap`) — Recovered plaintext login credentials and full command history from an unencrypted Telnet session. Demonstrated both manual inspection in Wireshark (Follow TCP Stream, display filters) and automated extraction with a Python script.
-
-**Live capture** (my home network) — Captured real traffic and found unencrypted HTTP downloads, plaintext DNS queries leaking browsing history, and noisy Windows telemetry in the background. Showed that even on a modern Windows 11 setup with HTTPS everywhere, DNS remains a blind spot.
+I also wrote a Python script that automates the whole process. Point it at any `.pcap` file and it'll flag plaintext credentials, insecure protocols, DNS leaks, and map everything to MITRE ATT&CK.
 
 ## Tools
 
-- Wireshark
-- Python 3 with Scapy
+- Wireshark 4.6.4
+- Python 3 + Scapy
 - Windows 11
 
-## Project layout
+## Layout
 
 ```
 scripts/analyze_pcap.py      # automated pcap analyzer
-tests/test_analyze.py        # unit tests for IAC stripping and classification
-captures/                    # pcap files go here (gitignored, too large)
-reports/findings_report.md   # full write-up with evidence
-screenshots/                 # wireshark screenshots referenced in report
+tests/test_analyze.py        # unit tests
+captures/                    # pcap files (gitignored, too large to track)
+reports/findings_report.md   # full write-up with screenshots
+screenshots/                 # wireshark evidence
 ```
 
-## How to run it
+## Running it
 
-```bash
+```
 pip install scapy
 python scripts/analyze_pcap.py captures/telnet-cooked.pcap
 ```
 
-Download `telnet-cooked.pcap` from [Wireshark Sample Captures](https://wiki.wireshark.org/SampleCaptures) and put it in `captures/`.
+You can grab `telnet-cooked.pcap` from [Wireshark Sample Captures](https://wiki.wireshark.org/SampleCaptures). Drop it in `captures/` and run the command above.
 
-Run tests:
-```bash
+Tests:
+```
+pip install pytest
 python -m pytest tests/test_analyze.py -v
 ```
 
-## What the script detects
+## What the script catches
 
-- Telnet keystroke reconstruction (strips IAC negotiation, recovers typed input)
-- FTP username/password extraction (passwords masked in output)
-- Unencrypted HTTP request logging
-- DNS query enumeration
-- Insecure port flagging (Telnet, FTP, SMTP, TFTP, etc.)
-- MITRE ATT&CK mapping for each finding
+- Telnet keystroke recovery (strips out IAC negotiation bytes, reconstructs what was typed)
+- FTP credentials in cleartext (passwords get masked in the output)
+- Unencrypted HTTP requests
+- DNS query logging
+- Insecure port detection
+- MITRE ATT&CK IDs for each finding
 
-## Findings summary
+## Findings
 
-| Finding | Severity | MITRE ATT&CK |
-|---------|----------|---------------|
-| Telnet credentials in plaintext | Critical | T1040, T1078 |
-| Full command history exposed | Critical | T1040 |
-| Unencrypted HTTP data transfer | High | T1040 |
-| DNS queries leak browsing history | Medium | T1016 |
-| Windows telemetry domain lookups | Medium | T1016 |
+| What | Severity | MITRE |
+|------|----------|-------|
+| Telnet login creds in plaintext | Critical | T1040, T1078 |
+| Full post-auth command history exposed | Critical | T1040 |
+| DNS queries readable by anyone on LAN | Medium | T1016 |
+| All web traffic properly encrypted (HTTPS) | Informational | — |
 
-Full analysis with Wireshark screenshots, compliance references (NIST, PCI DSS), and recommendations in `reports/findings_report.md`.
+Details, screenshots, and recommendations in [`reports/findings_report.md`](reports/findings_report.md).
