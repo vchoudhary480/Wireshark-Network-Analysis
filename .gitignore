@@ -1,18 +1,14 @@
-# pcap files are too big for git
 captures/*.pcap
 captures/*.pcapng
 !captures/.gitkeep
 
-# python
 __pycache__/
 *.pyc
 venv/
 .env
 
-# os
 .DS_Store
 Thumbs.db
 
-# ide
 .vscode/
 .idea/
