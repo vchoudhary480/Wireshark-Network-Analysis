@@ -3,13 +3,13 @@ captures/*.pcap
 captures/*.pcapng
 !captures/.gitkeep
 
-# python stuff
+# python
 __pycache__/
 *.pyc
 venv/
 .env
 
-# os junk
+# os
 .DS_Store
 Thumbs.db
 
