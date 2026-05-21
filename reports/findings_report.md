@@ -27,7 +27,7 @@ I used two captures: a Telnet sample (to show what credential theft looks like a
 
 I opened Follow > TCP Stream in Wireshark and the login was right there in readable text:
 
-![Follow TCP Stream showing full Telnet session](screenshots/telnet_tcp_stream.png)
+![Follow TCP Stream showing full Telnet session](../screenshots/telnet_tcp_stream.png)
 
 The username is `fake`. The password is visible too — I'm redacting it here because even on a sample capture, a security write-up shouldn't casually publish passwords. The point is that zero effort was needed to extract it. No cracking, no decryption, just reading.
 
@@ -43,7 +43,7 @@ exit
 
 The `ls -a` output showed dotfiles: `.cshrc`, `.login`, `.mailrc`, `.profile`, `.rhosts`. So an attacker now has credentials, OS version, hostname, and filesystem layout. That's enough for lateral movement.
 
-![Wireshark filtered for Telnet protocol](screenshots/telnet_filter.png)
+![Wireshark filtered for Telnet protocol](../screenshots/telnet_filter.png)
 
 My Python script also recovered the keystrokes automatically by stripping IAC negotiation bytes and reassembling the client-to-server payloads.
 
@@ -68,7 +68,7 @@ Every DNS query from my machine goes out as plaintext UDP to Cloudflare (1.1.1.1
 | fun-cc.azurewebsites.net | Some Azure-hosted app |
 | login.microsoftonline.com | Microsoft login attempt |
 
-![DNS filter showing plaintext queries to 1.1.1.1](screenshots/dns_queries.png)
+![DNS filter showing plaintext queries to 1.1.1.1](../screenshots/dns_queries.png)
 
 Someone at a coffee shop running Wireshark on the same network could build a profile of what I'm doing online just from DNS. They wouldn't see the content (that's encrypted), but the domains alone tell a story.
 
@@ -84,7 +84,7 @@ There's also local network noise — my Westinghouse Roku TV is broadcasting mDN
 
 I filtered for SYN packets to see where my machine was initiating connections. 143 SYN packets, every single one going to port 443.
 
-![SYN filter showing all connections on port 443](screenshots/syn_packets.png)
+![SYN filter showing all connections on port 443](../screenshots/syn_packets.png)
 
 Zero HTTP. No port 80 traffic at all. The browser layer is doing its job — everything is encrypted in transit. The weak spot is DNS (Finding 2), not the web traffic itself.
 
@@ -98,7 +98,7 @@ I ran `ping 8.8.8.8` during the capture. The Echo request/reply pairs are visibl
 
 But there's something else: a bunch of ICMP "Destination unreachable (Port unreachable)" messages from 104.196.0.153. Something on my machine tried to reach a UDP port on that IP and got rejected repeatedly over about 10 seconds.
 
-![ICMP filter showing ping and port unreachable messages](screenshots/icmp_ping.png)
+![ICMP filter showing ping and port unreachable messages](../screenshots/icmp_ping.png)
 
 This could be a background service trying to reach a server that's no longer listening, or a UDP-based protocol timing out. Not a security vulnerability on its own, but in a SOC environment this pattern would be worth investigating — repeated port-unreachable messages can indicate scanning, misconfiguration, or a service that moved.
 
