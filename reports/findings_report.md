@@ -29,7 +29,7 @@ I opened Follow > TCP Stream in Wireshark and the login was right there in reada
 
 ![Follow TCP Stream showing full Telnet session](../screenshots/telnet_tcp_stream.png)
 
-The username is `fake`. The password is visible too — I'm redacting it here because even on a sample capture, a security write-up shouldn't casually publish passwords. The point is that zero effort was needed to extract it. No cracking, no decryption, just reading.
+The username is `fake`. The password is visible too. I'm redacting it here because even on a sample capture, a security write-up shouldn't casually publish passwords. The point is that zero effort was needed to extract it. No cracking, no decryption, just reading.
 
 After login the server revealed it's running OpenBSD 2.6-beta on `bam.zing.org`. The user ran:
 
