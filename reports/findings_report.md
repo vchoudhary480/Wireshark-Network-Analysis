@@ -135,7 +135,7 @@ Here's what the automated analysis looks like on the Telnet capture:
     > exit
 
 ============================================================
-  FINDINGS (1 issue)
+  FINDINGS (1 issues)
 ============================================================
 
   [!!] CRITICAL - #1: Telnet session with plaintext keystrokes
