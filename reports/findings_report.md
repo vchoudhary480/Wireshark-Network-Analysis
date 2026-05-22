@@ -17,11 +17,11 @@ I used two captures: a Telnet sample (to show what credential theft looks like a
 
 ---
 
-## Finding 1 — Telnet login credentials recovered from capture (Critical)
+## Finding 1: Telnet login credentials recovered from capture (Critical)
 
 **Capture:** telnet-cooked.pcap
 **MITRE ATT&CK:** T1040 (Network Sniffing), T1078 (Valid Accounts)
-**Relevant controls:** PCI DSS 4.1, NIST SP 800-53 SC-8
+**Relevant controls:** PCI DSS v4.0 Req 4.2.1, NIST SP 800-53 SC-8
 
 92 packets, all Telnet, between 192.168.0.2 and 192.168.0.1. The entire session is unencrypted.
 
@@ -29,7 +29,7 @@ I opened Follow > TCP Stream in Wireshark and the login was right there in reada
 
 ![Follow TCP Stream showing full Telnet session](../screenshots/telnet_tcp_stream.png)
 
-The username is `fake`. The password is visible too. I'm redacting it here because even on a sample capture, a security write-up shouldn't casually publish passwords. The point is that zero effort was needed to extract it. No cracking, no decryption, just reading.
+The username is `fake` and the password is `user`, both fully visible in the TCP stream without any decryption. This is a public sample capture, so the credentials aren't sensitive, but the technique is identical to what works on real Telnet sessions. The protocol doesn't distinguish between a lab and production.
 
 After login the server revealed it's running OpenBSD 2.6-beta on `bam.zing.org`. The user ran:
 
@@ -135,7 +135,7 @@ Here's what the automated analysis looks like on the Telnet capture:
     > exit
 
 ============================================================
-  FINDINGS (1 issues)
+  FINDINGS (1 issue)
 ============================================================
 
   [!!] CRITICAL - #1: Telnet session with plaintext keystrokes
