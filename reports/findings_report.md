@@ -51,7 +51,7 @@ My Python script also recovered the keystrokes automatically by stripping IAC ne
 
 ---
 
-## Finding 2 — DNS queries expose browsing patterns (Medium)
+## Finding 2: DNS queries expose browsing patterns (Medium)
 
 **Capture:** my_capture.pcap (live)
 **MITRE ATT&CK:** T1016 (System Network Configuration Discovery)
@@ -72,13 +72,13 @@ Every DNS query from my machine goes out as plaintext UDP to Cloudflare (1.1.1.1
 
 Someone at a coffee shop running Wireshark on the same network could build a profile of what I'm doing online just from DNS. They wouldn't see the content (that's encrypted), but the domains alone tell a story.
 
-There's also local network noise — my Westinghouse Roku TV is broadcasting mDNS packets advertising itself on the LAN. Not a vulnerability exactly, but it tells an observer what devices are on my network.
+There's also local network noise, my Westinghouse Roku TV is broadcasting mDNS packets advertising itself on the LAN. Not a vulnerability exactly, but it tells an observer what devices are on my network.
 
 **Fix:** DNS-over-HTTPS. Chrome has it built in (Settings > Privacy > Use Secure DNS). Windows 11 supports it at the OS level for Cloudflare. I probably should have turned this on already.
 
 ---
 
-## Finding 3 — All web traffic is HTTPS (good news)
+## Finding 3: All web traffic is HTTPS (good news)
 
 **Capture:** my_capture.pcap (live)
 
@@ -86,15 +86,15 @@ I filtered for SYN packets to see where my machine was initiating connections. 1
 
 ![SYN filter showing all connections on port 443](../screenshots/syn_packets.png)
 
-Zero HTTP. No port 80 traffic at all. The browser layer is doing its job — everything is encrypted in transit. The weak spot is DNS (Finding 2), not the web traffic itself.
+Zero HTTP. No port 80 traffic at all. The browser layer is doing its job and everything is encrypted in transit. The weak spot is DNS (Finding 2), not the web traffic itself.
 
 ---
 
-## Finding 4 — ICMP behavior and port unreachable responses
+## Finding 4: ICMP behavior and port unreachable responses
 
 **Capture:** my_capture.pcap (live)
 
-I ran `ping 8.8.8.8` during the capture. The Echo request/reply pairs are visible and working normally — 5 pings sent, 5 replies received.
+I ran `ping 8.8.8.8` during the capture. The Echo request/reply pairs are visible and working normally, 5 pings sent, 5 replies received.
 
 But there's something else: a bunch of ICMP "Destination unreachable (Port unreachable)" messages from 104.196.0.153. Something on my machine tried to reach a UDP port on that IP and got rejected repeatedly over about 10 seconds.
 
@@ -162,4 +162,4 @@ Here's what the automated analysis looks like on the Telnet capture:
 
 ---
 
-*Vishwa Prakash Choudhary — UC Davis, Computer Science*
+*Vishwa Prakash Choudhary, UC Davis, Computer Science*
