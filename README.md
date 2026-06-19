@@ -25,7 +25,7 @@ screenshots/                 # wireshark evidence
 ## Running it
 
 ```
-pip install scapy
+pip install -r requirements.txt
 python scripts/analyze_pcap.py captures/telnet-cooked.pcap
 ```
 
