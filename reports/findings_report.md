@@ -54,7 +54,7 @@ My Python script also recovered the keystrokes automatically by stripping IAC ne
 ## Finding 2: DNS queries expose browsing patterns (Medium)
 
 **Capture:** my_capture.pcap (live)
-**MITRE ATT&CK:** T1016 (System Network Configuration Discovery)
+**MITRE ATT&CK:** T1040 (Network Sniffing)
 **Relevant controls:** NIST SP 800-53 SC-8
 
 Every DNS query from my machine goes out as plaintext UDP to Cloudflare (1.1.1.1). I found 26 unique domains, and some of them are pretty revealing:
