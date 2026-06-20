@@ -33,7 +33,6 @@ You can grab `telnet-cooked.pcap` from [Wireshark Sample Captures](https://wiki.
 
 Tests:
 ```
-pip install pytest
 python -m pytest tests/test_analyze.py -v
 ```
 
