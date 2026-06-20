@@ -100,7 +100,7 @@ But there's something else: a bunch of ICMP "Destination unreachable (Port unrea
 
 ![ICMP filter showing ping and port unreachable messages](../screenshots/icmp_ping.png)
 
-This could be a background service trying to reach a server that's no longer listening, or a UDP-based protocol timing out. Not a security vulnerability on its own, but in a SOC environment this pattern would be worth investigating — repeated port-unreachable messages can indicate scanning, misconfiguration, or a service that moved.
+This could be a background service trying to reach a server that's no longer listening, or a UDP-based protocol timing out. Not a security vulnerability on its own, but in a SOC environment this pattern would be worth investigating; repeated port-unreachable messages can indicate scanning, misconfiguration, or a service that moved.
 
 ---
 
