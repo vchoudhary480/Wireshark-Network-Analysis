@@ -51,7 +51,7 @@ python -m pytest tests/test_analyze.py -v
 |------|----------|-------|
 | Telnet login creds in plaintext | Critical | T1040, T1078 |
 | Full post-auth command history exposed | Critical | T1040 |
-| DNS queries readable by anyone on LAN | Medium | T1040 |
+| DNS queries readable by anyone on LAN | Medium | T1016 |
 | All web traffic properly encrypted (HTTPS) | Informational | --- |
 
 Details, screenshots, and recommendations in [`reports/findings_report.md`](reports/findings_report.md).
