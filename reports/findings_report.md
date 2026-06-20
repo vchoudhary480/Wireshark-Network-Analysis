@@ -29,9 +29,9 @@ I opened Follow > TCP Stream in Wireshark and the login was right there in reada
 
 ![Follow TCP Stream showing full Telnet session](../screenshots/telnet_tcp_stream.png)
 
-The username is `fake` and the password is `user`, both fully visible in the TCP stream without any decryption. This is a public sample capture, so the credentials aren't sensitive, but the technique is identical to what works on real Telnet sessions. The protocol doesn't distinguish between a lab and production.
+The username is `fake` and the password is `user`, both fully visible in the TCP stream without any decryption. This is a public sample capture, so the credentials aren't sensitive, but the technique is identical to what works on real Telnet sessions. The protocol doesn't distinguish between a lab and production. Recovered credentials could be used directly for authenticated access, enabling T1078(Valid Accounts). An attacker could log into this or other systems using the sniffed credentials.
 
-After login the server revealed it's running OpenBSD 2.6-beta on `bam.zing.org`. The user ran:
+After login, the server revealed it's running OpenBSD 2.6-beta on `bam.zing.org`. The user ran:
 
 ```
 /sbin/ping www.yahoo.com
