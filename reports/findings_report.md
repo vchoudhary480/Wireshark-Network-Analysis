@@ -4,8 +4,8 @@
 **Date:** May 2026
 **Tools:** Wireshark 4.6.4, Python 3 (Scapy)
 **Captures:**
-- `telnet-cooked.pcap` — sample Telnet session (Wireshark wiki)
-- `my_capture.pcap` — 23,991 packets from my home network
+- `telnet-cooked.pcap` - sample Telnet session (Wireshark wiki)
+- `my_capture.pcap` - 23,991 packets from my home network
 
 ---
 
